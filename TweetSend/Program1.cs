@@ -31,10 +31,9 @@ internal class Program1
         if (response.IsSuccessStatusCode)
         {
             Console.WriteLine("Tweet sent successfully!");
+            return;
         }
-        else
-        {
-            Console.WriteLine($"Failed to send tweet. Error: {response.ReasonPhrase}");
-        }
+        
+        Console.WriteLine($"Failed to send tweet. Error: {response.ReasonPhrase}");
     }
 }

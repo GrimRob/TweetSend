@@ -46,11 +46,10 @@ internal class Program2
         if (response.IsSuccessStatusCode)
         {
             Console.WriteLine("Tweet sent successfully!");
+            return;
         }
-        else
-        {
-            Console.WriteLine($"Failed to send tweet. Error: {response.ReasonPhrase}");
-        }
+        
+        Console.WriteLine($"Failed to send tweet. Error: {response.ReasonPhrase}");
     }
 
     private static async Task<string?> UploadFileAsync()
@@ -86,10 +85,9 @@ internal class Program2
             return deserializedResponse?.MediaId;
 
         }
-        else
-        {
-            Console.WriteLine($"Failed to send tweet. Error: {uploadResponse.ReasonPhrase}");
-        }
+        
+        
+        Console.WriteLine($"Failed to send tweet. Error: {uploadResponse.ReasonPhrase}");
 
         return null;
     }
