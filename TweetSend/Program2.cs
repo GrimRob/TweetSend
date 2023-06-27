@@ -17,11 +17,15 @@ internal class Program2
     {
 
         var mediaId = await UploadFileAsync();
+        if (string.IsNullOrEmpty(mediaId))
+        {
+            Console.WriteLine("Failed to send media");
+            return;
+        }
 
-        var tweet = "Hello world";
         var tweetData = new
         {
-            text = tweet,
+            text = "Hello world",
             media = new
             {
                 media_ids = new List<string> { mediaId }
@@ -36,17 +40,16 @@ internal class Program2
             Content = new StringContent(jsonData, Encoding.UTF8, "application/json")
         };
 
-        using (var httpClient = new HttpClient(oauth))
+        using var httpClient = new HttpClient(oauth);
+
+        var response = await httpClient.SendAsync(createTweetRequest);
+        if (response.IsSuccessStatusCode)
         {
-            var response = await httpClient.SendAsync(createTweetRequest);
-            if (response.IsSuccessStatusCode)
-            {
-                Console.WriteLine("Tweet sent successfully!");
-            }
-            else
-            {
-                Console.WriteLine($"Failed to send tweet. Error: {response.ReasonPhrase}");
-            }
+            Console.WriteLine("Tweet sent successfully!");
+        }
+        else
+        {
+            Console.WriteLine($"Failed to send tweet. Error: {response.ReasonPhrase}");
         }
     }
 
